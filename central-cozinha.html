@@ -333,12 +333,12 @@ function tick(){
 
  /* Tarefas: abre automaticamente na sexta às 06:30 (ou depois, se o tablet estava desligado) */
  const w=currentWeek(d);
- if(store.get("choreShown","")!==w.key && !choresOpen()){
+ if(d.getDay()===5 && store.get("choreShown","")!==w.key && !choresOpen()){
   store.set("choreShown",w.key);
   openChores();
  }
 }
-setInterval(tick,1000); tick();
+setInterval(tick,1000);
 
 /* ===== PREVISÃO (Open-Meteo) ===== */
 const WMO={0:["☀️","Céu limpo"],1:["🌤️","Quase limpo"],2:["⛅","Parcialmente nublado"],3:["☁️","Nublado"],
@@ -732,6 +732,7 @@ async function requestWake(){
  try{ if("wakeLock" in navigator && (!wakeLock || wakeLock.released)) wakeLock=await navigator.wakeLock.request("screen"); }catch(e){}
 }
 requestWake();
+tick();
 </script>
 </body>
 </html>
